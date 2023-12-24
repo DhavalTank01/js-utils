@@ -1,0 +1,32 @@
+{
+  "name": "@dhavaltank/js-utils",
+  "version": "1.0.0",
+  "description": "A package for js utils for react or node projects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "capitalize",
+    "utils",
+    "utils-file",
+    "js-utils",
+    "javascript",
+    "dhavaltank",
+    "dhavaltank-js-utils",
+    "@dhavaltank/js-utils"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^29.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DhavalTank01/js-utils.git"
+  },
+  "author": "Dhaval Tank",
+  "bugs": {
+    "url": "https://github.com/DhavalTank01/js-utils/issues"
+  },
+  "homepage": "https://github.com/DhavalTank01/js-utils#readme"
+}
