@@ -1,6 +1,6 @@
 {
   "name": "@dhavaltank/js-utils",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A package for js utils for react or node projects.",
   "main": "index.js",
   "scripts": {
