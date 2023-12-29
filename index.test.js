@@ -44,9 +44,19 @@ describe("check titleCase function", () => {
 
 
 describe('check getInitials function', () => {
-    test('check getInitials with string', () => {
+    test('check getInitials with single word', () => {
         const result = getInitials("test");
         expect(result).toBe("T");
+    });
+
+    test('check getInitials with two word', () => {
+        const result = getInitials("test user");
+        expect(result).toBe("TU");
+    });
+
+    test('check getInitials with three word', () => {
+        const result = getInitials("test user test");
+        expect(result).toBe("TT");
     });
 
     test('check getInitials with out string', () => {

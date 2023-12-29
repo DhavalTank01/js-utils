@@ -24,9 +24,10 @@ const titleCase = (str, key = null) => {
 const getInitials = (name) => {
     try {
         if (typeof name === 'string' && name.trim() !== '') {
-            const firstName = name.trim().split(" ")[0];
-            const firstLetter = firstName[0].toUpperCase();
-            return firstLetter;
+            const words = name?.trim()?.split(" ")?.map(latter => latter[0].toUpperCase())?.join("");
+            if (words?.length > 1)
+                return words[0] + words[words?.length - 1];
+            return words;
         }
         return "?";
     } catch (error) {
