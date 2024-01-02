@@ -61,7 +61,7 @@ const compareArrays = (arr1, arr2) => {
     return true;
 };
 
-const getRandomOTPWithLength = (length) => {
+const generateOTPWithLength = (length) => {
     length = Math.max(1, length);
     const min = Math.pow(10, length - 1);
     const max = Math.pow(10, length) - 1;
@@ -70,6 +70,8 @@ const getRandomOTPWithLength = (length) => {
 };
 
 const slugify = (string, separator = "-") => {
+    if (!string.trim()?.length)
+        return "";
     return string
         .toString() // Cast to string (optional)
         .toLowerCase() // Convert the string to lowercase letters
@@ -184,7 +186,7 @@ module.exports = {
     getInitials,
     getTruncateDescription,
     compareArrays,
-    getRandomOTPWithLength,
+    generateOTPWithLength,
     slugify,
     setLocalStorage,
     getLocalStorage,

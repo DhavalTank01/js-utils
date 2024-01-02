@@ -5,7 +5,7 @@ const {
     titleCase,
     getInitials,
     compareArrays,
-    getRandomOTPWithLength,
+    generateOTPWithLength,
     slugify,
     getTruncateDescription,
     validateText,
@@ -86,7 +86,6 @@ describe('check getInitials function', () => {
 describe('check getTruncateDescription function', () => {
     test('check with string', () => {
         const result = getTruncateDescription("Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi, a.");
-        console.log("🚀 ~ file: index.test.js:89 ~ test ~ result:", result)
         expect(result).toBe("Lorem ipsu...");
     })
 
@@ -108,10 +107,10 @@ describe("check compareArrays function", () => {
     })
 })
 
-describe("check getRandomOTPWithLength function", () => {
+describe("check generateOTPWithLength function", () => {
     test('should generate a random number with the specified length', () => {
         const length = 4;
-        const randomNumber = getRandomOTPWithLength(length);
+        const randomNumber = generateOTPWithLength(length);
         expect(typeof randomNumber).toBe('number');
         expect(randomNumber).toBeGreaterThanOrEqual(Math.pow(10, length - 1));
         expect(randomNumber).toBeLessThanOrEqual(Math.pow(10, length) - 1);
@@ -120,11 +119,11 @@ describe("check getRandomOTPWithLength function", () => {
 
     test('should handle edge cases', () => {
         const minLength = 1;
-        const minNumber = getRandomOTPWithLength(minLength);
+        const minNumber = generateOTPWithLength(minLength);
         expect(minNumber.toString().length).toBe(minLength);
 
         const largeLength = 7;
-        const largeNumber = getRandomOTPWithLength(largeLength);
+        const largeNumber = generateOTPWithLength(largeLength);
         expect(largeNumber.toString().length).toBe(largeLength);
     });
 })
@@ -186,7 +185,7 @@ describe('Validation Functions', () => {
     });
 
     test('validateMobileNumber should return valid for a valid mobile number', () => {
-        const result = validateMobileNumber('1234567890');
+        const result = validateMobileNumber('validateMobileNumber');
         expect(result).toEqual({ isError: false, errorMessage: 'Valid mobile number' });
     });
 
