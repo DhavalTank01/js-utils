@@ -7,14 +7,31 @@
     "test": "jest"
   },
   "keywords": [
-    "capitalize",
     "utils",
     "utils-file",
     "js-utils",
     "javascript",
+    "dhaval",
     "dhavaltank",
+    "@dhavaltank",
     "dhavaltank-js-utils",
-    "@dhavaltank/js-utils"
+    "@dhavaltank/js-utils",
+    "capitalizeFirstLetter",
+    "titleCase",
+    "getInitials",
+    "getTruncateDescription",
+    "compareArrays",
+    "generateOTPWithLength",
+    "slugify",
+    "setLocalStorage",
+    "getLocalStorage",
+    "removeLocalStorage",
+    "clearLocalStorage",
+    "getGreeting",
+    "validateText",
+    "validateEmail",
+    "validatePassword",
+    "validateMobileNumber"
   ],
   "license": "MIT",
   "dependencies": {
