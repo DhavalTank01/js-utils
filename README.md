@@ -29,7 +29,7 @@ yarn add @dhavaltank/js-utils
 <li><strong>validateMobileNumber</strong></li>
 </ul>
 <h1 id="documentation">Documentation</h1>
-<h2 id="capitalizefirstletter-function">capitalizeFirstLetter Function</h2>
+<h2 id="capitalizefirstletter-function">capitalizeFirstLetter(str)</h2>
 <p><strong>Function Description:</strong> </p>
 <p>The capitalizeFirstLetter function takes a string as input and returns a new string with the first letter capitalized.</p>
 <p><strong>Parameters</strong></p>
@@ -79,7 +79,7 @@ getInitials(&quot;hello world User&quot;); // &#39;HU&#39;
 <p><strong>Return Value</strong></p>
 <p>The function returns the truncated string, followed by an ellipsis if the original string length exceeds the specified maximum length. If the input string is empty or falsy, an empty string is returned.</p>
 <pre><code>import { getTruncateDescription } from &quot;@dhavaltank/js-utils&quot;;
-getTruncateDescription(&quot;hello world User&quot;); // &#39;HU&#39;
+getTruncateDescription(&quot;Hello World User&quot;); // &#39;Hello Worl...&#39;
 </code></pre>
 <h2 id="comparearraysarray1-array2"><code>compareArrays(array1, array2)</code></h2>
 <p><strong>Function Description:</strong> </p>
