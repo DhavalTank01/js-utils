@@ -1,86 +1,96 @@
 const capitalizeFirstLetter = (str) => {
-    if (Boolean(str))
-        if (str.trim()?.length > 0)
-            return str.charAt(0).toUpperCase() + str.slice(1);
-        else
-            return "";
-    else
-        return "";
-};
+    try {
+        if (!str)
+            return null;
+        return str?.trim()?.length > 0 ? str.charAt(0).toUpperCase() + str.slice(1) : "";
+    } catch (error) {
+        console.error(error)
+        return null;
+    }
+}
 
 const titleCase = (str, key = null) => {
-    if (!str)
-        return "";
-    const txt = str?.replace(/_/g, " ")?.replace(/([A-Z])/g, "$1")
-    const text = txt?.split(' ')
-        ?.map(word => word.charAt(0)?.toUpperCase() + word?.slice(1))
-        ?.join(' ');
-    if (key === "And") {
-        return text.replace("And", "&");
+    try {
+        if (!str)
+            return null;
+        const text = str.replace(/_/g, " ").split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        return key === "And" ? text.replace("And", "&") : text;
+    } catch (error) {
+        console.error(error)
+        return null;
     }
-    return text;
 };
 
 const getInitials = (name) => {
     try {
-        if (typeof name === 'string' && name.trim() !== '') {
-            const words = name?.trim()?.split(" ")?.map(latter => latter[0].toUpperCase())?.join("");
-            if (words?.length > 1)
-                return words[0] + words[words?.length - 1];
-            return words;
-        }
-        return "?";
+        if (typeof name !== 'string' || name.trim() === '') return "?";
+        const words = name.trim().split(" ").map(latter => latter[0].toUpperCase()).join("");
+        return words.length > 1 ? words[0] + words[words.length - 1] : words;
     } catch (error) {
-        return "?";
+        console.error(error);
     }
 };
 
 const getTruncateDescription = (text, maxLength = 10) => {
-    if (!text)
-        return "";
-    else {
-        if (text?.length <= maxLength) {
-            return text;
-        } else {
-            return `${text.substring(0, maxLength)}...`;
-        }
+    try {
+        return !text ? "" : text.length <= maxLength ? text : `${text.substring(0, maxLength)}...`;
+    } catch (error) {
+        console.error(error);
+        return null;
     }
-};
+}
 
 const compareArrays = (arr1, arr2) => {
-    if (arr1.length !== arr2.length) {
-        return false;
+    try {
+        return arr1.length === arr2.length && arr1.slice().sort().every((value, index) => value === arr2.slice().sort()[index]);
+    } catch (error) {
+        console.error(error);
+        return null;
     }
-    const sortedArr1 = arr1.slice().sort();
-    const sortedArr2 = arr2.slice().sort();
-    for (let i = 0; i < sortedArr1.length; i++) {
-        if (sortedArr1[i] !== sortedArr2[i]) {
-            return false;
+}
+
+const generateOTPWithLength = (length, isAlphaNumeric = false) => {
+    try {
+        if (isAlphaNumeric) {
+            const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            return Array.from({ length }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
+        } else {
+            return Math.floor(Math.random() * (Math.pow(10, length) - Math.pow(10, length - 1) + 1)) + Math.pow(10, length - 1)
         }
+    } catch (error) {
+        console.error(error);
     }
-    return true;
 };
 
-const generateOTPWithLength = (length) => {
-    length = Math.max(1, length);
-    const min = Math.pow(10, length - 1);
-    const max = Math.pow(10, length) - 1;
-    const randomInt = Math.floor(Math.random() * (max - min + 1)) + min;
-    return randomInt;
+const generateRandomPassword = (length = 8) => {
+    try {
+        const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+        const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const digitChars = "0123456789";
+        const specialChars = "!@#$%^&*()-_=+";
+        let password = "";
+        password += lowercaseChars.charAt(Math.floor(Math.random() * lowercaseChars.length));
+        password += uppercaseChars.charAt(Math.floor(Math.random() * uppercaseChars.length));
+        password += digitChars.charAt(Math.floor(Math.random() * digitChars.length));
+        for (let i = password.length; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * (lowercaseChars + uppercaseChars + digitChars + specialChars).length);
+            password += (lowercaseChars + uppercaseChars + digitChars + specialChars).charAt(randomIndex);
+        }
+        return password;
+    } catch (error) {
+        console.error(error)
+        return null;
+    }
+
 };
 
 const slugify = (string, separator = "-") => {
-    if (!string.trim()?.length)
-        return "";
-    return string
-        .toString() // Cast to string (optional)
-        .toLowerCase() // Convert the string to lowercase letters
-        .trim() // Remove whitespace from both sides of a string (optional)
-        .replace(/\s+/g, separator) // Replace spaces with -
-        .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-        .replace(/\_/g, separator) // Replace _ with -
-        .replace(/\-\-+/g, separator) // Replace multiple - with single -
-        .replace(/\-$/g, ""); // Remove trailing -
+    try {
+        return string.trim() ? string.toString().toLowerCase().trim().replace(/\s+/g, separator).replace(/[^\w\-]+/g, "").replace(/\_/g, separator).replace(/\-\-+/g, separator).replace(/\-$/g, "") : ""
+    } catch (error) {
+        console.error(error)
+        return null;
+    }
 };
 
 const setLocalStorage = (key, data) => {
@@ -99,7 +109,7 @@ const getLocalStorage = (key) => {
         return storedData ? JSON.parse(storedData) : null;
     } catch (error) {
         console.error(`Error retrieving data from localStorage for key "${key}":`, error);
-        return null;
+        return false;
     }
 };
 
@@ -124,60 +134,176 @@ const clearLocalStorage = () => {
 };
 
 const getGreeting = () => {
-    const greetings = {
-        morning: "Good morning!",
-        afternoon: "Good afternoon!",
-        evening: "Good evening!",
-    };
-    const currentHour = new Date().getHours();
-    if (currentHour >= 5 && currentHour < 12)
-        return greetings.morning;
-    else
-        if (currentHour >= 12 && currentHour < 17)
-            return greetings.afternoon;
+    try {
+        const greetings = {
+            morning: "Good morning!",
+            afternoon: "Good afternoon!",
+            evening: "Good evening!",
+        };
+        const currentHour = new Date().getHours();
+        if (currentHour >= 5 && currentHour < 12)
+            return greetings.morning;
         else
-            return greetings.evening;
+            if (currentHour >= 12 && currentHour < 17)
+                return greetings.afternoon;
+            else
+                return greetings.evening;
+    } catch (error) {
+        return null;
+    }
 };
 
 const validateText = (value, errorMessage = null) => {
-    if (!value?.trim())
-        return { isError: true, errorMessage: (errorMessage || "This field must not be empty.") };
-    const regex = /^[a-zA-Z ]+$/;
-    if (!regex.test(value?.trim())) {
-        return { isError: true, errorMessage: (errorMessage || "Invalid input") };
+    try {
+        if (!value?.trim())
+            return { isError: true, errorMessage: (errorMessage || "This field must not be empty.") };
+        const regex = /^[a-zA-Z ]+$/;
+        if (!regex.test(value?.trim())) {
+            return { isError: true, errorMessage: (errorMessage || "Invalid input") };
+        }
+        return { isError: false, errorMessage: "Valid input" };
+    } catch (error) {
+        console.error(error);
+        return { isError: true, message: "Something went wrong." };
     }
-    return { isError: false, errorMessage: "Valid input" };
 };
 
 const validateEmail = (email, errorMessage = null) => {
-    if (!email?.trim())
-        return { isError: true, errorMessage: (errorMessage || "This field must not be empty.") };
-    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(email?.trim())) {
-        return { isError: true, errorMessage: (errorMessage || "Invalid email") };
+    try {
+        if (!email?.trim())
+            return { isError: true, errorMessage: (errorMessage || "This field must not be empty.") };
+        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!re.test(email?.trim())) {
+            return { isError: true, errorMessage: (errorMessage || "Invalid email") };
+        }
+        return { isError: false, errorMessage: "Valid email" };
+    } catch (error) {
+        console.error(error);
+        return { isError: true, message: "Something went wrong." };
     }
-    return { isError: false, errorMessage: "Valid email" };
 };
 
 const validatePassword = (password, errorMessage = null) => {
-    if (!password?.trim())
-        return { isError: true, errorMessage: (errorMessage || "This field must not be empty.") };
-    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,40}$/;
-    if (!regex.test(password?.trim())) {
-        return { isError: true, errorMessage: (errorMessage || "Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, one number, and one symbol.") };
+    try {
+        if (!password?.trim())
+            return { isError: true, errorMessage: (errorMessage || "This field must not be empty.") };
+        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,40}$/;
+        if (!regex.test(password?.trim())) {
+            return { isError: true, errorMessage: (errorMessage || "Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, one number, and one symbol.") };
+        }
+        return { isError: false, errorMessage: "Valid password" };
+    } catch (error) {
+        console.error(error);
+        return { isError: true, message: "Something went wrong." };
     }
-    return { isError: false, errorMessage: "Valid password" };
 };
 
 const validateMobileNumber = (value, errorMessage = null) => {
-    if (!value?.trim())
-        return { isError: true, errorMessage: (errorMessage || "This field must not be empty.") };
-    const regex = /^\d{10}$/;
-    if (!regex.test(value?.trim())) {
-        return { isError: true, errorMessage: (errorMessage || "Invalid mobile number") };
+    try {
+        if (!value?.trim())
+            return { isError: true, errorMessage: (errorMessage || "This field must not be empty.") };
+        const regex = /^\d{10}$/;
+        if (!regex.test(value?.trim())) {
+            return { isError: true, errorMessage: (errorMessage || "Invalid mobile number") };
+        }
+        return { isError: false, errorMessage: "Valid mobile number" };
+    } catch (error) {
+        console.error(error);
+        return { isError: true, message: "Something went wrong." };
     }
-    return { isError: false, errorMessage: "Valid mobile number" };
 };
+const CurrencyCode = {
+    USD: 'USD',
+    EUR: 'EUR',
+    GBP: 'GBP',
+    INR: 'INR',
+    JPY: 'JPY',
+    AUD: 'AUD',
+    CAD: 'CAD',
+    CHF: 'CHF',
+    CNY: 'CNY'
+};
+
+const formatCurrency = (
+    number,
+    currencyCode = CurrencyCode.USD,
+    minimumFractionDigits = 2,
+    maximumFractionDigits = 2
+) => {
+    try {
+        if (!number) return null;
+
+        if (!Object.values(CurrencyCode).includes(currencyCode)) {
+            console.warn(`Invalid currency code "${currencyCode}". Defaulting to USD.`);
+            currencyCode = CurrencyCode.USD;
+        }
+
+        return number?.toLocaleString('en-US', {
+            style: 'currency',
+            currency: currencyCode,
+            minimumFractionDigits,
+            maximumFractionDigits,
+        });
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+const removeDuplicatesFromArray = (array) => {
+    try {
+        return Array.from(new Set(array));
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+const sortArrayByMode = (array, mode = 'asc', key = null) => {
+    try {
+        if (!array || array.length === 0)
+            return null;
+
+        if (mode !== 'asc' && mode !== 'desc') {
+            console.error('Invalid sorting mode. Please use "asc" or "desc".');
+            return array;
+        }
+
+        return [...array].sort((a, b) => {
+            const aValue = key !== null ? a[key] : a;
+            const bValue = key !== null ? b[key] : b;
+
+            return mode === 'asc' ? aValue - bValue : bValue - aValue;
+        });
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+const reverseString = (str) => {
+    try {
+        if (!str)
+            return null;
+        return str?.split('').reverse().join('');
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+
+const isObjectValuesEmpty = (object) => {
+    const errors = Object.keys(object).reduce((acc, key) => {
+        if (!object[key]) {
+            acc[key] = key;
+        }
+        return acc;
+    }, {});
+
+    return Object.keys(errors).length > 0;
+};
+
 
 
 module.exports = {
@@ -187,6 +313,7 @@ module.exports = {
     getTruncateDescription,
     compareArrays,
     generateOTPWithLength,
+    generateRandomPassword,
     slugify,
     setLocalStorage,
     getLocalStorage,
@@ -197,4 +324,16 @@ module.exports = {
     validateEmail,
     validatePassword,
     validateMobileNumber,
+    formatCurrency,
+    CurrencyCode,
+    removeDuplicatesFromArray,
+    sortArrayByMode,
+    reverseString,
+    isObjectValuesEmpty,
 };
+
+// checkNotNullAndNotEmpty
+// isUndefined
+// debounce
+// isFalsy
+// isTruthy

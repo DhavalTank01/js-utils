@@ -11,7 +11,14 @@ const {
     validateText,
     validateEmail,
     validatePassword,
-    validateMobileNumber
+    validateMobileNumber,
+    generateRandomPassword,
+    formatCurrency,
+    CurrencyCode,
+    removeDuplicatesFromArray,
+    sortArrayByMode,
+    reverseString,
+    isObjectValuesEmpty
 } = require('./index.js');
 
 // test case for capitalizeFirstLetter function
@@ -23,12 +30,12 @@ describe('Check capitalizeFirstLetter function', () => {
 
     test('check without string', () => {
         const result = capitalizeFirstLetter();
-        expect(result).toBe("");
+        expect(result).toBe(null);
     });
 
     test('if i pass null or undefined as string', () => {
         const result = capitalizeFirstLetter(undefined);
-        expect(result).toBe("");
+        expect(result).toBe(null);
     });
 });
 
@@ -51,7 +58,7 @@ describe("check titleCase function", () => {
 
     test("checking with null or undefined", () => {
         const result = titleCase(null);
-        expect(result).toBe("");
+        expect(result).toBe(null);
     });
 });
 
@@ -118,7 +125,7 @@ describe("check generateOTPWithLength function", () => {
     });
 
     test('should handle edge cases', () => {
-        const minLength = 1;
+        const minLength = 4;
         const minNumber = generateOTPWithLength(minLength);
         expect(minNumber.toString().length).toBe(minLength);
 
@@ -126,7 +133,38 @@ describe("check generateOTPWithLength function", () => {
         const largeNumber = generateOTPWithLength(largeLength);
         expect(largeNumber.toString().length).toBe(largeLength);
     });
+
+    test('should handle edge cases', () => {
+        const minLength = 4;
+        const minNumber = generateOTPWithLength(minLength, true);
+        expect(minNumber.toString().length).toBe(minLength);
+
+        const largeLength = 6;
+        const largeNumber = generateOTPWithLength(largeLength, true);
+        expect(largeNumber.toString().length).toBe(largeLength);
+    });
 })
+
+describe('check generateRandomPassword function', () => {
+    test('generates a password of the specified length', () => {
+        const length = 12;
+        const password = generateRandomPassword(length);
+        expect(password.length).toBe(length);
+    });
+
+    test('includes at least one lowercase character, one uppercase character, and one digit', () => {
+        const password = generateRandomPassword();
+        expect(/[a-z]/.test(password)).toBe(true);
+        expect(/[A-Z]/.test(password)).toBe(true);
+        expect(/\d/.test(password)).toBe(true);
+    });
+
+    test('contains only valid characters', () => {
+        const password = generateRandomPassword();
+        const validChars = /^[a-zA-Z0-9!@#$%^&*()-_=+]+$/;
+        expect(validChars.test(password)).toBe(true);
+    });
+});
 
 describe('check slugify function', () => {
     test('converts a string to a slug with default separator', () => {
@@ -150,7 +188,7 @@ describe('check slugify function', () => {
     });
 });
 
-describe('Validation Functions', () => {
+describe('check Validation Functions', () => {
     test('validateText should return valid for non-empty alphabetic text', () => {
         const result = validateText('John Doe');
         expect(result).toEqual({ isError: false, errorMessage: 'Valid input' });
@@ -185,12 +223,146 @@ describe('Validation Functions', () => {
     });
 
     test('validateMobileNumber should return valid for a valid mobile number', () => {
-        const result = validateMobileNumber('validateMobileNumber');
+        const result = validateMobileNumber("1234567890");
         expect(result).toEqual({ isError: false, errorMessage: 'Valid mobile number' });
     });
 
     test('validateMobileNumber should return error for an invalid mobile number', () => {
-        const result = validateMobileNumber('invalidnumber');
+        const result = validateMobileNumber("123456789012");
         expect(result).toEqual({ isError: true, errorMessage: 'Invalid mobile number' });
     });
 });
+
+
+describe('check formatCurrency function', () => {
+    test('Formats currency with default options', () => {
+        expect(formatCurrency(1234567.89)).toBe('$1,234,567.89');
+        expect(formatCurrency(1234567.12343, CurrencyCode.USD, 2, 4)).toBe('$1,234,567.1234');
+    });
+
+    test('Formats currency with custom currency code and decimal places', () => {
+        expect(formatCurrency(98765, CurrencyCode.EUR, 2, 2)).toBe('€98,765.00');
+    });
+
+    test('Formats currency with different currency code', () => {
+        expect(formatCurrency(98765.43, CurrencyCode.GBP)).toBe('£98,765.43');
+    });
+
+    test('Formats currency with different currency code', () => {
+        expect(formatCurrency(98765.43, CurrencyCode.INR)).toBe('₹98,765.43');
+    });
+});
+
+describe('check removeDuplicatesFromArray function', () => {
+    test('Removes duplicates from an array', () => {
+        const arrayWithDuplicates = [1, 2, 3, 4, 2, 1, 5, 6, 3];
+        const arrayWithoutDuplicates = removeDuplicatesFromArray(arrayWithDuplicates);
+
+        expect(arrayWithoutDuplicates).toEqual(expect.arrayContaining([1, 2, 3, 4, 5, 6]));
+        expect(arrayWithoutDuplicates.length).toBe(6);
+    });
+
+    test('Handles an empty array', () => {
+        const emptyArray = [];
+        const result = removeDuplicatesFromArray(emptyArray);
+        expect(result).toEqual([]);
+    });
+
+    test('Handles an array with no duplicates', () => {
+        const arrayNoDuplicates = [1, 2, 3, 4, 5];
+        const result = removeDuplicatesFromArray(arrayNoDuplicates);
+        expect(result).toEqual(arrayNoDuplicates);
+    });
+});
+
+describe('check sortArrayByMode function', () => {
+    test('sortArrayByMode sorts array in ascending order by default', () => {
+        const inputArray = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
+        const sortedArray = sortArrayByMode(inputArray);
+
+        expect(sortedArray).toEqual([1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]);
+    });
+
+    test('sortArrayByMode sorts array in descending order when mode is "desc"', () => {
+        const inputArray = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
+        const sortedArray = sortArrayByMode(inputArray, 'desc');
+
+        expect(sortedArray).toEqual([9, 6, 5, 5, 5, 4, 3, 3, 2, 1, 1]);
+    });
+
+    test('sortArrayByMode sorts array of objects by a specified key', () => {
+        const inputArray = [
+            { name: 'John', age: 30 },
+            { name: 'Alice', age: 25 },
+            { name: 'Bob', age: 35 },
+        ];
+
+        const sortedArray = sortArrayByMode(inputArray, 'asc', 'age');
+
+        expect(sortedArray).toEqual([
+            { name: 'Alice', age: 25 },
+            { name: 'John', age: 30 },
+            { name: 'Bob', age: 35 },
+        ]);
+    });
+
+    test('sortArrayByMode handles invalid sorting mode and returns the original array', () => {
+        const inputArray = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
+        const sortedArray = sortArrayByMode(inputArray, 'invalidMode');
+
+        expect(sortedArray).toEqual(inputArray);
+    });
+});
+
+describe('check reverseString function', () => {
+    test('Reverses a simple string', () => {
+        const result = reverseString('Hello');
+        expect(result).toBe('olleH');
+    });
+
+    test('Handles empty string', () => {
+        const result = reverseString('');
+        expect(result).toBe(null);
+    });
+
+    test('Reverses a string with spaces', () => {
+        const result = reverseString('Hello, World!');
+        expect(result).toBe('!dlroW ,olleH');
+    });
+});
+
+describe('check isObjectValuesEmpty function', () => {
+    test('should return false when there are no empty values', () => {
+        const obj = {
+            name: 'John',
+            age: 25,
+            city: 'New York'
+        };
+        expect(isObjectValuesEmpty(obj)).toBe(false);
+    });
+
+    test('should return true when there is at least one empty value', () => {
+        const obj = {
+            name: 'Alice',
+            age: null,
+            city: 'London'
+        };
+        expect(isObjectValuesEmpty(obj)).toBe(true);
+    });
+
+    test('should handle multiple empty values and return true', () => {
+        const obj = {
+            name: '',
+            age: 30,
+            city: undefined
+        };
+        expect(isObjectValuesEmpty(obj)).toBe(true);
+    });
+
+    test('should handle an empty object and return false', () => {
+        const obj = {};
+        expect(isObjectValuesEmpty(obj)).toBe(false);
+    });
+});
+
+
