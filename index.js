@@ -304,7 +304,38 @@ const isObjectValuesEmpty = (object) => {
     return Object.keys(errors).length > 0;
 };
 
+const checkNotNullAndNotEmpty = (value) => {
+    try {
+        if (value !== undefined && value !== null && value !== "" && value?.toString()?.length !== 0)
+            return true;
+        else
+            return false;
+    } catch (error) {
+        console.error(error)
+        return false;
+    }
+}
 
+const handleNaN = (value, returnValue = 0) => {
+    try {
+        if (isNaN(value))
+            return returnValue;
+        else
+            return value;
+    } catch (error) {
+        console.error(error)
+        return returnValue;
+
+    }
+}
+
+const isFalsy = (value) => {
+    return !value;
+}
+
+const isTruthy = (value) => {
+    return !!value;
+}
 
 module.exports = {
     capitalizeFirstLetter,
@@ -330,10 +361,8 @@ module.exports = {
     sortArrayByMode,
     reverseString,
     isObjectValuesEmpty,
+    checkNotNullAndNotEmpty,
+    handleNaN,
+    isFalsy,
+    isTruthy,
 };
-
-// checkNotNullAndNotEmpty
-// isUndefined
-// debounce
-// isFalsy
-// isTruthy

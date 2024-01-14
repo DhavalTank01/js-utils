@@ -18,7 +18,11 @@ const {
     removeDuplicatesFromArray,
     sortArrayByMode,
     reverseString,
-    isObjectValuesEmpty
+    isObjectValuesEmpty,
+    checkNotNullAndNotEmpty,
+    handleNaN,
+    isFalsy,
+    isTruthy
 } = require('./index.js');
 
 // test case for capitalizeFirstLetter function
@@ -365,4 +369,44 @@ describe('check isObjectValuesEmpty function', () => {
     });
 });
 
+
+describe('check checkNotNullAndNotEmpty function', () => {
+    test('returns true for a non-empty string', () => {
+        expect(checkNotNullAndNotEmpty('Hello')).toBe(true);
+    });
+
+    test('returns false for undefined', () => {
+        expect(checkNotNullAndNotEmpty(undefined)).toBe(false);
+    });
+});
+
+describe('check handleNaN function', () => {
+    test('returns the value for a valid number', () => {
+        expect(handleNaN(42)).toBe(42);
+    });
+
+    test('returns default value for NaN', () => {
+        expect(handleNaN('not a number', 10)).toBe(10);
+    });
+});
+
+describe('check isFalsy function', () => {
+    test('returns true for falsy value', () => {
+        expect(isFalsy(null)).toBe(true);
+    });
+
+    test('returns false for truthy value', () => {
+        expect(isFalsy('hello')).toBe(false);
+    });
+});
+
+describe('check isTruthy function', () => {
+    test('returns true for truthy value', () => {
+        expect(isTruthy('hello')).toBe(true);
+    });
+
+    test('returns false for falsy value', () => {
+        expect(isTruthy(null)).toBe(false);
+    });
+});
 
