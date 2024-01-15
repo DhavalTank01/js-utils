@@ -11,7 +11,7 @@ yarn add @dhavaltank/js-utils
 npm run test
 </code></pre>
 <h1 id="utils-functions-list">Utils Functions List</h1>
-<ul>
+<ol>
 <li><strong>capitalizeFirstLetter</strong></li>
 <li><strong>titleCase</strong></li>
 <li><strong>getInitials</strong></li>
@@ -38,7 +38,7 @@ npm run test
 <li><strong>isFalsy</strong></li>
 <li><strong>isTruthy</strong></li>
 <li><strong>groupBy</strong></li>
-</ul>
+</ol>
 <h1 id="documentation">Documentation</h1>
 <h2 id="capitalizefirstletter-function">capitalizeFirstLetter(str)</h2>
 <p><strong>Function Description:</strong> </p>
