@@ -7,7 +7,8 @@ yarn add @dhavaltank/js-utils
 </code></pre>
 <h2 id="running-tests">Running Tests</h2>
 <p>To run tests, run the following command</p>
-<pre><code class="language-bash">  npm run test
+<pre><code class="language-bash">npm install jest
+npm run test
 </code></pre>
 <h1 id="utils-functions-list">Utils Functions List</h1>
 <ul>
@@ -17,6 +18,7 @@ yarn add @dhavaltank/js-utils
 <li><strong>getTruncateDescription</strong></li>
 <li><strong>compareArrays</strong></li>
 <li><strong>generateOTPWithLength</strong></li>
+<li><strong>generateRandomPassword</strong></li>
 <li><strong>slugify</strong></li>
 <li><strong>setLocalStorage</strong></li>
 <li><strong>getLocalStorage</strong></li>
@@ -26,7 +28,16 @@ yarn add @dhavaltank/js-utils
 <li><strong>validateText</strong></li>
 <li><strong>validateEmail</strong></li>
 <li><strong>validatePassword</strong></li>
-<li><strong>validateMobileNumber</strong></li>
+<li><strong>formatCurrency</strong></li>
+<li><strong>removeDuplicatesFromArray</strong></li>
+<li><strong>sortArrayByMode</strong></li>
+<li><strong>reverseString</strong></li>
+<li><strong>isObjectValuesEmpty</strong></li>
+<li><strong>checkNotNullAndNotEmpty</strong></li>
+<li><strong>handleNaN</strong></li>
+<li><strong>isFalsy</strong></li>
+<li><strong>isTruthy</strong></li>
+<li><strong>groupBy</strong></li>
 </ul>
 <h1 id="documentation">Documentation</h1>
 <h2 id="capitalizefirstletter-function">capitalizeFirstLetter(str)</h2>
@@ -41,7 +52,7 @@ yarn add @dhavaltank/js-utils
 <pre><code>import { capitalizeFirstLetter } from &quot;@dhavaltank/js-utils&quot;;
 capitalizeFirstLetter(&quot;hello world&quot;); // &#39;Hello world&#39;
 </code></pre>
-<h2 id="titlecasestr"><code>titleCase(str)</code></h2>
+<h2 id="titlecasestr"><strong>titleCase(str)</strong></h2>
 <p><strong>Function Description:</strong> </p>
 <p>The titleCase function takes a string (str) and an optional key (key) as parameters. The purpose of this function is to convert the input string into a title case, where the first letter of each word is capitalized. Additionally, the function allows for a special case where if the key parameter is set to &quot;And,&quot; it replaces the occurrence of the word &quot;And&quot; with the ampersand &quot;&amp;&quot; in the final title case string.</p>
 <p><strong>Parameters</strong></p>
@@ -54,7 +65,7 @@ capitalizeFirstLetter(&quot;hello world&quot;); // &#39;Hello world&#39;
 <pre><code>import { titleCase } from &quot;@dhavaltank/js-utils&quot;;
 titleCase(&quot;hello world&quot;); // &#39;Hello World&#39;
 </code></pre>
-<h2 id="getinitialsstr"><code>getInitials(str)</code></h2>
+<h2 id="getinitialsstr"><strong>getInitials(str)</strong></h2>
 <p><strong>Function Description:</strong> </p>
 <p>The getInitials function takes a name parameter, which is expected to be a string containing one or more words. The function aims to generate initials based on the first letter of each word in the input string. If the input string is a single word, the function returns the uppercase first and last letters of that word as the initials. If the input string consists of multiple words, the function concatenates the uppercase first letters of each word to form the initials.</p>
 <p><strong>Parameters</strong></p>
@@ -68,7 +79,7 @@ getInitials(&quot;hello&quot;); // &#39;H&#39;
 getInitials(&quot;hello world&quot;); // &#39;HW&#39;
 getInitials(&quot;hello world User&quot;); // &#39;HU&#39;
 </code></pre>
-<h2 id="gettruncatedescriptionstr"><code>getTruncateDescription(str)</code></h2>
+<h2 id="gettruncatedescriptionstr"><strong>getTruncateDescription(str)</strong></h2>
 <p><strong>Function Description:</strong> </p>
 <p>The getTruncateDescription function takes a text parameter (a string) and an optional maxLength parameter (default value is 10). The purpose of this function is to truncate the input string to a specified maximum length and append an ellipsis (&quot;...&quot;) if the original string length exceeds the specified maximum length.</p>
 <p><strong>Parameters</strong></p>
@@ -81,7 +92,7 @@ getInitials(&quot;hello world User&quot;); // &#39;HU&#39;
 <pre><code>import { getTruncateDescription } from &quot;@dhavaltank/js-utils&quot;;
 getTruncateDescription(&quot;Hello World User&quot;); // &#39;Hello Worl...&#39;
 </code></pre>
-<h2 id="comparearraysarray1-array2"><code>compareArrays(array1, array2)</code></h2>
+<h2 id="comparearraysarray1-array2"><strong>compareArrays(array1, array2)</strong></h2>
 <p><strong>Function Description:</strong> </p>
 <p>The compareArrays function takes two arrays (arr1 and arr2) as parameters and checks if they are equal. Equality in this context means that the arrays contain the same elements, regardless of their order.</p>
 <p><strong>Parameters</strong></p>
@@ -95,20 +106,34 @@ getTruncateDescription(&quot;Hello World User&quot;); // &#39;Hello Worl...&#39;
 compareArrays([1, 2, 3], [3, 1, 2]); // true
 compareArrays([1, 2, 3], [4, 5, 6]); // false
 </code></pre>
-<h2 id="generateotpwithlengthlength"><code>generateOTPWithLength(length)</code></h2>
+<h2 id="generateotpwithlengthlength"><strong>generateOTPWithLength(length)</strong></h2>
 <p><strong>Function Description:</strong> </p>
-<p>The generateOTPWithLength function takes a length parameter, representing the desired length of the generated one-time password (OTP). It generates a random integer within the range of possible values for an OTP with the specified length.</p>
+<p>The generateOTPWithLength function is a utility for generating one-time passwords (OTPs) in JavaScript. It creates numeric or alphanumeric passwords of a specified length.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>length (number): The desired length of the generated OTP.</li>
+<li>isAlphaNumeric  (boolean):  (optional, default: false): A boolean flag to determine whether the OTP should include alphanumeric characters.</li>
 </ul>
 <p><strong>Return Value</strong></p>
-<p>The function returns a randomly generated integer that serves as the one-time password. The integer is within the range of possible values for an OTP with the specified length. If the provided length is less than 1, it is set to a minimum value of 1.</p>
+<p>Returns a string representing the generated OTP.</p>
 <pre><code>import { generateOTPWithLength } from &quot;@dhavaltank/js-utils&quot;;
 generateOTPWithLength(4); // 7519
 generateOTPWithLength(6); // 195742
+generateOTPWithLength(8, true); // rT9sLpQ7
 </code></pre>
-<h2 id="slugifystring-separator"><code>slugify(string, separator)</code></h2>
+<h2 id="generateRandomPassword "><strong>generateRandomPassword(length)</strong></h2>
+<p><strong>Function Description:</strong> </p>
+<p>The generateRandomPassword function is a JavaScript utility designed to create random passwords. It generates passwords of a specified length with a mix of lowercase and uppercase letters, digits, and special characters.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>length (number):  (optional, default: 8): The desired length of the generated password.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns a string representing the randomly generated password.</p>
+<pre><code>import { generateRandomPassword } from &quot;@dhavaltank/js-utils&quot;;
+generateRandomPassword(12); // aB3$XyZi8Lq
+</code></pre>
+<h2 id="slugifystring-separator"><strong>slugify(string, separator)</strong></h2>
 <p><strong>Function Description:</strong> </p>
 <p>The slugify function takes a string parameter and an optional separator parameter (default is &quot;-&quot;). Its purpose is to generate a URL-friendly slug from the input string. The slug is created by converting the string to lowercase, removing non-word characters, replacing spaces and underscores with the specified separator, and ensuring proper formatting.</p>
 <p><strong>Parameters</strong></p>
@@ -226,6 +251,154 @@ validatePassword(&#39;Abc@1234.com&#39;);// { isError: false, errorMessage: &#39
 <p>The function returns an object with isError indicating whether the mobile number is valid or not, and errorMessage providing the error message if isError is true.</p>
 <pre><code>import { validateMobileNumber } from &quot;@dhavaltank/js-utils&quot;;
 validateMobileNumber(12345467890);// { isError: false, errorMessage: &#39;Valid mobile number&#39; }
+</code></pre>
+<h2 id="formatCurrency-errormessage">formatCurrency(value, CurrencyCode, minimumFractionDigits, maximumFractionDigits)</h2>
+<p><strong>Function Description:</strong> </p>
+<p>The formatCurrency function is a JavaScript utility for formatting numbers as currency strings. It uses the toLocaleString method to format a given number with specified currency code and fraction digits.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>value (number):  (required): The numeric value to be formatted as currency.</li>
+<li>currencyCode  (optional, default: CurrencyCode.USD): The currency code to use for formatting (e.g., 'USD', 'EUR', 'GBP', etc.).</li>
+<li>minimumFractionDigits (optional, default: 2): The minimum number of fraction digits to display.</li>
+<li>maximumFractionDigits  (optional, default: 2): The maximum number of fraction digits to display.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns a string representing the formatted currency.</p>
+<pre><code>import { formatCurrency } from &quot;@dhavaltank/js-utils&quot;;
+formatCurrency(12345.67); // $12,345.67
+formatCurrency(amount, CurrencyCode.GBP, 1, 3); // £9,876.543
+</code></pre>
+<h2 id="removeDuplicatesFromArray">removeDuplicatesFromArray(array)</h2>
+<p><strong>Function Description:</strong> </p>
+<p>The removeDuplicatesFromArray function is a JavaScript utility for removing duplicate elements from an array. It utilizes the Set data structure to ensure uniqueness and returns a new array without duplicates.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>array (required): The input array containing elements with potential duplicates.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns a new array with duplicate elements removed.</p>
+<pre><code>import { removeDuplicatesFromArray } from &quot;@dhavaltank/js-utils&quot;;
+removeDuplicatesFromArray([1, 2, 3, 2, 4, 5, 1]); // [1, 2, 3, 4, 5]
+removeDuplicatesFromArray(['apple', 'banana', 'orange', 'apple', 'grape', 'banana']); // £9,876.543
+</code></pre>
+<h2 id="sortArrayByMode">sortArrayByMode(array, mode)</h2>
+<p><strong>Function Description:</strong> </p>
+<p>The sortArrayByMode function is a JavaScript utility for sorting an array based on a specified mode (ascending or descending). It can also handle sorting objects within the array based on a specified key.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>array (required): The input array to be sorted.</li>
+<li>mode (optional, default: 'asc'): The sorting mode, either 'asc' for ascending or 'desc' for descending.</li>
+<li>key (optional, default: null): The key to use for sorting objects within the array. If null, the array elements themselves are sorted.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns a new array sorted based on the specified mode and key.</p>
+<pre><code>import { sortArrayByMode } from &quot;@dhavaltank/js-utils&quot;;
+sortArrayByMode([3, 1, 4, 1, 5, 9, 2, 6]); // [1, 1, 2, 3, 4, 5, 6, 9]
+sortArrayByMode([3, 1, 4, 1, 5, 9, 2, 6], 'desc'); // [9, 6, 5, 4, 3, 2, 1, 1]
+</code></pre>
+<h2 id="reverseString">reverseString(str)</h2>
+<p><strong>Function Description:</strong> </p>
+<p>The reverseString function is a JavaScript utility for reversing a given string. It uses the split, reverse, and join methods to efficiently reverse the characters in the string.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>str (required): The input string to be reversed.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns a new string with the characters reversed.</p>
+<pre><code>import { reverseString } from &quot;@dhavaltank/js-utils&quot;;
+reverseString('Hello, World!'); // '!dlroW ,olleH'
+</code></pre>
+<h2 id="isObjectValuesEmpty">isObjectValuesEmpty(obj)</h2>
+<p><strong>Function Description:</strong> </p>
+<p>The isObjectValuesEmpty function is a JavaScript utility for checking if any values in an object are empty or falsy. It uses the reduce method to iterate through the object's keys and builds an errors object containing keys with empty values.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>object (required): The input object to check for empty values.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns true if any values in the object are empty or falsy, otherwise returns false.</p>
+<pre><code>import { isObjectValuesEmpty } from &quot;@dhavaltank/js-utils&quot;;
+const exampleObject = {
+  name: 'John Doe',
+  age: 30,
+  email: '',
+  address: null,
+};
+isObjectValuesEmpty(exampleObject); // true
+</code></pre>
+<h2 id="checkNotNullAndNotEmpty">checkNotNullAndNotEmpty(value)</h2>
+<p><strong>Function Description:</strong> </p>
+<p>The checkNotNullAndNotEmpty function is a JavaScript utility for checking if a value is not undefined, not null, and not an empty string. It also considers falsy values like 0 as valid.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>value (required): The input value to check for not being undefined, not null, and not an empty string.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns true if the value is not undefined, not null, and not an empty string; otherwise, returns false.</p>
+<pre><code>import { checkNotNullAndNotEmpty } from &quot;@dhavaltank/js-utils&quot;;
+checkNotNullAndNotEmpty("Hello, World!"); // true
+checkNotNullAndNotEmpty("); // false
+</code></pre>
+<h2 id="handleNaN">handleNaN(value)</h2>
+<p><strong>Function Description:</strong> </p>
+<p>The handleNaN function is a JavaScript utility for handling NaN (Not-a-Number) values. It checks if a value is NaN and returns either the original value or a specified fallback value.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>value (required): The input value to check for being NaN.</li>
+<li>returnValue (optional, default: 0): The fallback value to return if the input value is NaN.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns the original value if it is not NaN; otherwise, returns the specified fallback value.</p>
+<pre><code>import { handleNaN } from &quot;@dhavaltank/js-utils&quot;;
+handleNaN(42); // 42
+handleNaN("Not a Number"); // 0
+handleNaN("Not a Number", null); // null
+</code></pre>
+<h2 id="isFalsy">isFalsy(value)</h2>
+<p><strong>Function Description:</strong> </p>
+<p>The isFalsy function is a JavaScript utility that checks whether a given value is falsy.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>value (required): The input value to check for falsiness.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns true if the input value is falsy; otherwise, returns false.</p>
+<pre><code>import { isFalsy } from &quot;@dhavaltank/js-utils&quot;;
+isFalsy(null); // true
+isFalsy(""); // true
+isFalsy(42); // false
+</code></pre>
+<h2 id="isTruthy">isTruthy(value)</h2>
+<p><strong>Function Description:</strong> </p>
+<p>The isTruthy function is a JavaScript utility that checks whether a given value is truthy.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>value (required): The input value to check for truthiness.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns true if the input value is truthy; otherwise, returns false.</p>
+<pre><code>import { isTruthy } from &quot;@dhavaltank/js-utils&quot;;
+isTruthy(null); // true
+isTruthy(""); // false
+isTruthy(0); // false
+</code></pre>
+<h2 id="groupBy">groupBy(value)</h2>
+<p><strong>Function Description:</strong> </p>
+<p>The groupBy function is a JavaScript utility for grouping an array of objects by a specified key.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>arr (required): The input array of objects to be grouped.</li>
+<li>key (required): The key by which the objects in the array should be grouped.</li>
+</ul>
+<p><strong>Return Value</strong></p>
+<p>Returns an object where keys are unique values of the specified key, and values are arrays of objects grouped by that key.</p>
+<pre><code>import { groupBy } from &quot;@dhavaltank/js-utils&quot;;
+const exampleData = [
+  { id: 1, category: 'A', value: 42 },
+  { id: 2, category: 'B', value: 65 },
+  { id: 3, category: 'A', value: 78 },
+];
+groupBy(exampleData, 'category'); // { A: [{ id: 1, category: 'A', value: 42 }, { id: 3, category: 'A', value: 78 }], B: [{ id: 2, category: 'B', value: 65 }] }
 </code></pre>
 <h2 id="authors">Authors</h2>
 <ul>

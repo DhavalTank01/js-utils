@@ -81,7 +81,6 @@ const generateRandomPassword = (length = 8) => {
         console.error(error)
         return null;
     }
-
 };
 
 const slugify = (string, separator = "-") => {
@@ -291,7 +290,6 @@ const reverseString = (str) => {
         return null;
     }
 }
-
 
 const isObjectValuesEmpty = (object) => {
     const errors = Object.keys(object).reduce((acc, key) => {
