@@ -22,7 +22,8 @@ const {
     checkNotNullAndNotEmpty,
     handleNaN,
     isFalsy,
-    isTruthy
+    isTruthy,
+    groupBy
 } = require('./index.js');
 
 // test case for capitalizeFirstLetter function
@@ -410,3 +411,31 @@ describe('check isTruthy function', () => {
     });
 });
 
+describe('groupBy function', () => {
+    test('should group objects by the specified key', () => {
+        const data = [
+            { id: 1, name: 'John', category: 'A' },
+            { id: 2, name: 'Jane', category: 'B' },
+            { id: 3, name: 'Bob', category: 'A' },
+            { id: 4, name: 'Alice', category: 'B' },
+        ];
+
+        const result = groupBy(data, 'category');
+
+        expect(result).toEqual({
+            'A': [
+                { id: 1, name: 'John', category: 'A' },
+                { id: 3, name: 'Bob', category: 'A' }
+            ],
+            'B': [
+                { id: 2, name: 'Jane', category: 'B' },
+                { id: 4, name: 'Alice', category: 'B' }
+            ]
+        });
+    });
+
+    test('should handle empty input array', () => {
+        const result = groupBy([], 'category');
+        expect(result).toEqual({});
+    });
+});

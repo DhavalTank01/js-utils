@@ -337,6 +337,23 @@ const isTruthy = (value) => {
     return !!value;
 }
 
+const groupBy = (arr, key) => {
+    try {
+        if (!arr)
+            return null;
+        if (!key)
+            return arr;
+        return arr.reduce((acc, obj) => {
+            const keyValue = obj[key];
+            (acc[keyValue] ??= []).push(obj);
+            return acc;
+        }, {});
+    } catch (error) {
+        console.error(error)
+        return null;
+    }
+}
+
 module.exports = {
     capitalizeFirstLetter,
     titleCase,
@@ -365,4 +382,5 @@ module.exports = {
     handleNaN,
     isFalsy,
     isTruthy,
+    groupBy,
 };
